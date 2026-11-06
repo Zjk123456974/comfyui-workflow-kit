@@ -1,0 +1,47 @@
+name: CI
+
+# 触发条件：推到 main、提 PR、或网页上手动点 Run workflow
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+# 最小权限：只读代码，不写仓库
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Python ${{ matrix.python-version }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # README 承诺 Python 3.9+，这里真的把三个版本都跑一遍
+        python-version: ["3.9", "3.11", "3.13"]
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: 运行单元测试
+        run: python -m unittest discover -s tests -v
+
+      - name: 冒烟测试 - 列出示例工作流的模型引用
+        run: python check.py --workflows examples
+
+      - name: 守卫 - 仓库里不能有模型权重
+        shell: bash
+        run: |
+          if git ls-files | grep -iE '\.(safetensors|gguf|ckpt|pt|pth|bin)$'; then
+            echo "::error::检测到被 git 跟踪的模型权重文件"
+            exit 1
+          fi
+          echo "OK: 仓库中没有权重文件"

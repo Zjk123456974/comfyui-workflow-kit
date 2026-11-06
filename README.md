@@ -1,5 +1,7 @@
 # comfyui-workflow-kit
 
+[![CI](https://github.com/Zjk123456974/comfyui-workflow-kit/actions/workflows/ci.yml/badge.svg)](https://github.com/Zjk123456974/comfyui-workflow-kit/actions/workflows/ci.yml)
+
 > 给 ComfyUI 工作流「点名」：核对每个 `.json` 里写死的模型文件名，是否真的躺在正确的目录里。
 
 一个零依赖的 Python 小工具 + 一份可持续维护的工作流登记表。
@@ -62,18 +64,37 @@ python -m unittest discover -s tests -v
 
 ```
 comfyui-workflow-kit/
+├── .github/workflows/ci.yml  # GitHub Actions 自动测试工作流
 ├── check.py                  # 核心核对器（零依赖）
 ├── README.md                 # 本文件
 ├── MODELS.md                 # Qwen-Image 模型下载清单与硬件档位
 ├── WORKFLOWS.md              # 工作流登记表（名称 / 用途 / 来源 / 许可证）
 ├── workflows/                # 放你自己的 .json（私有放 workflows/private/）
 ├── examples/
-│   └── sample_workflow.json  # 结构样例，用于演示核对器
+│   ├── sample_workflow.json  # 结构样例，用于演示核对器
+│   └── sample_report.txt     # 真实运行生成的示例报告
 ├── tests/test_check.py       # 单元测试
 ├── CHANGELOG.md
 ├── LICENSE                   # MIT
 └── .gitignore
 ```
+
+## 持续集成（GitHub Actions）
+
+`.github/workflows/ci.yml` 是本仓库的**自动化工作流**：GitHub 每次收到 `push` 或 `pull_request`
+都会开一台干净的 Linux 机器，自动跑一遍单元测试和冒烟测试，并阻止权重文件被误提交。
+
+| 项 | 值 |
+|---|---|
+| 文件位置 | 必须是 `.github/workflows/*.yml`，放别处 GitHub 不认 |
+| 触发条件 | 推送到 `main`、提交 PR、网页上手动 `Run workflow` |
+| 测试矩阵 | Python 3.9 / 3.11 / 3.13（兑现 README 承诺的 3.9+） |
+| 检查内容 | 16 项单元测试 → `check.py --workflows examples` → 权重文件守卫 |
+| 结果在哪看 | 仓库页 **Actions** 标签，或首页上方的 CI 徽章（绿 = 通过） |
+
+在 GitHub 网页上新建同类工作流：仓库页 → **Actions** → **New workflow** → 选模板或
+`set up a workflow yourself`；也可以走 **Add file → Create new file**，文件名填
+`.github/workflows/ci.yml`（斜杠会自动建出文件夹）。提交后 Actions 页立刻出现一次运行记录。
 
 ## 仓库里为什么没有模型文件
 
