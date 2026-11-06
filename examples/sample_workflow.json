@@ -1,0 +1,40 @@
+{
+  "last_node_id": 6,
+  "last_link_id": 0,
+  "nodes": [
+    {
+      "id": 1,
+      "type": "UnetLoaderGGUF",
+      "widgets_values": ["qwen-image-Q3_K_S.gguf"]
+    },
+    {
+      "id": 2,
+      "type": "CLIPLoader",
+      "widgets_values": ["qwen_2.5_vl_7b_fp8_scaled.safetensors", "qwen_image", "default"]
+    },
+    {
+      "id": 3,
+      "type": "VAELoader",
+      "widgets_values": ["qwen_image_vae.safetensors"]
+    },
+    {
+      "id": 4,
+      "type": "LoraLoader",
+      "widgets_values": ["Qwen-Image-Lightning-8steps-V1.0.safetensors", 1.0]
+    },
+    {
+      "id": 5,
+      "type": "KSampler",
+      "widgets_values": [8, "euler", 1.0]
+    },
+    {
+      "id": 6,
+      "type": "SaveImage",
+      "widgets_values": ["sample_output"]
+    }
+  ],
+  "links": [],
+  "extra": {
+    "note": "结构样例，仅用于演示 check.py 的模型名提取与核对；不是可直接出图的完整工作流，请勿直接导入 ComfyUI 运行。"
+  }
+}

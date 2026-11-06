@@ -1,0 +1,30 @@
+# 模型权重：体积以 GB 计，绝不入库
+*.safetensors
+*.gguf
+*.ckpt
+*.pt
+*.pth
+*.bin
+*.onnx
+
+# 私有工作流（可本地使用，不公开）
+workflows/private/
+
+# 生成的报告 / 输出
+report.json
+*.log
+out/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+
+# 本机环境
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

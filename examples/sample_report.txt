@@ -1,0 +1,13 @@
+comfyui-workflow-kit 1.0.0 - ComfyUI 工作流模型核对
+工作流目录 : examples
+模型目录   : D:/ComfyUI-下载/models
+已索引权重 : 0 个
+
+[1] sample_workflow.json
+    [MISS] Qwen-Image-Lightning-8steps-V1.0.safetensors        -> 放到 models/loras/
+    [MISS] qwen-image-Q3_K_S.gguf                              -> 放到 models/diffusion_models/
+    [MISS] qwen_2.5_vl_7b_fp8_scaled.safetensors               -> 放到 models/text_encoders/
+    [MISS] qwen_image_vae.safetensors                          -> 放到 models/vae/
+
+汇总: 1 个工作流 / 4 项引用 / OK 0 / 缺失 4 / 目录不对 0 / 未核对 0
+自检: FAILED（有缺件，退出码 1）
